@@ -6,6 +6,20 @@
 
 ## Данные
 
+### Датасет
+
 Для выполнения проекта я нашла два почти одинаковых датасета: [CoNLL2003](https://github.com/pfliu-nlp/Named-Entity-Recognition-NER-Papers/tree/master/ner_dataset/CoNLL2003) и [CoNLL++](https://github.com/ZihanWangKi/CrossWeigh/tree/master/data). Разница между ними в том, что в CoNLL++ версии 
 чуть более точно размечен файл для тестирования модели. Более точная тестовая выборка – причина, по которой я использовала датасет CoNLL++ для обучения
 своей модели.
+
+### Формат
+
+Каждая строка данных состоит из слова, частеречного тега, тега для построения синтаксических деревьев и, собственно, NER-тэга. Формат разметки – BIO. Пример разметки:
+
+```
+CHINA NNP I-NP B-LOC
+IN IN I-PP O
+SURPRISE DT I-NP O
+DEFEAT NN I-NP O
+. . O O
+```
