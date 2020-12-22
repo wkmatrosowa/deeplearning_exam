@@ -46,9 +46,19 @@ DEFEAT NN I-NP O
 
 F-мера от 90.94 до 94.3 в зависимости от датасета (CoNLL2003 / CoNLL++) и подхода.
 
-## Результаты и итоги
+## Проблемы и их решение
 
-### Метрики
+**Несбалансированность тегов в датасете приводит к тому, что сеть предсказывает всё как неименованную сущность.**
+
+*Решение 1*: добавление нормированных весов тегов, изменение параметра reduction у функции лосса и перемножение лосса на веса ([пример](https://discuss.pytorch.org/t/per-class-and-per-sample-weighting/25530/4)).
+
+Это решение дало модели возможность больше предсказывать теги. Однако оно не дало хорошего прироста по метрикам и качеству.
+
+*Решение 2*: добавление искуственно заданных весов, изменение параметра reduction у функции лосса и перемножение лосса на веса.
+
+Поменяла нормированные веса на искусственные. Этот подход дал лучший результат.
+
+## Результаты
 
 | Метрика      | Значение |
 | ----------- | ----------- |
@@ -58,30 +68,23 @@ F-мера от 90.94 до 94.3 в зависимости от датасета 
 | mean train loss   | 0.04        |
 | mean test loss   | 0.05        |
 
-### Проблемы и решение
-
-Проблема 1. Несбалансированность тегов в датасете приводит к тому, что сеть предсказывает всё как неименованную сущность.
-
-Решение 1: добавление нормированных весов тегов и изменение параметра reduction у функции лосса
-
-Решение 2: добавление искуственно заданных весов и изменение параметра reduction у функции лосса – дало лучший результат.
-
-### Итоги
-
 ## Способы решения задачи
 
-Neural Architectures for Named Entity Recognition End-toEnd Sequence labeling via BLSTM-CNN-CRF
+Судя по тому, какие материалы я находила, можно сделать вывод, что задачу NER решать можно абсолютно по-разному: с помощью сверточных и реккурентных сетей и
+их комбинаций, а также используя [Марковские случайные поля, или Марковские сети](https://habr.com/ru/post/241317/).
+
+*Neural Architectures for Named Entity Recognition End-toEnd Sequence labeling via BiLSTM-CNN-CRF*
 * [code](https://github.com/ZhixiuYe/NER-pytorch)
 * [paper](https://arxiv.org/abs/1603.01354)
 
-Hybrid semi-Markov CRF
+*Hybrid semi-Markov CRF*
 * [code](https://github.com/ZhixiuYe/HSCRF-pytorch)
 * [paper](https://www.aclweb.org/anthology/P18-2038.pdf)
 
-LSTM-CRF Model for Named Entity Recognition (or Sequence Labeling)
+*LSTM-CRF Model for Named Entity Recognition (or Sequence Labeling)*
 * [code](https://github.com/allanj/pytorch_lstmcrf/tree/v0.2.0)
-* [paper reference from authors of the code](https://arxiv.org/abs/1603.01360)
+* [paper reference from the authors of the code](https://arxiv.org/abs/1603.01360)
 
-LM-LSTM-CRF
+*LM-LSTM-CRF*
 * [code](https://github.com/LiyuanLucasLiu/LM-LSTM-CRF)
 * [paper](https://arxiv.org/abs/1709.04109)
