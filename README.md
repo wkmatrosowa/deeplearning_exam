@@ -6,9 +6,17 @@
 
 Решить задачу извлечения определенных именованных сущностей (локаций, персон и организаций) с метриками, не сильно уступающими state-of-the-art. 
 
-### Бейзлайн-решение
+### Решение
 
-LSTM
+LSTM с параметрами
+
+| Параметр      | Значение |
+| ----------- | ----------- |
+| number of layers | 4  |
+| hidden dimension  | 128 |
+| spatial dropout   | 0.3  |
+| embedding dimension   | 300  |
+| embedding vocab length  | 100 000  |
 
 ## Данные
 
@@ -47,12 +55,33 @@ F-мера от 90.94 до 94.3 в зависимости от датасета 
 | micro-F1 (on test)     | 0.86      |
 | macro-F1 (on test)   | 0.56        |
 | accuracy (on test)   | 0.86        |
-| train loss   | 0.04        |
-| test loss   | 0.05        |
+| mean train loss   | 0.04        |
+| mean test loss   | 0.05        |
 
 ### Проблемы и решение
 
+Проблема 1. Несбалансированность тегов в датасете приводит к тому, что сеть предсказывает всё как неименованную сущность.
+
+Решение 1: добавление нормированных весов тегов и изменение параметра reduction у функции лосса
+
+Решение 2: добавление искуственно заданных весов и изменение параметра reduction у функции лосса – дало лучший результат.
+
 ### Итоги
 
-## Обзор способов решения задачи
+## Способы решения задачи
 
+Neural Architectures for Named Entity Recognition End-toEnd Sequence labeling via BLSTM-CNN-CRF
+* [code](https://github.com/ZhixiuYe/NER-pytorch)
+* [paper](https://arxiv.org/abs/1603.01354)
+
+Hybrid semi-Markov CRF
+* [code](https://github.com/ZhixiuYe/HSCRF-pytorch)
+* [paper](https://www.aclweb.org/anthology/P18-2038.pdf)
+
+LSTM-CRF Model for Named Entity Recognition (or Sequence Labeling)
+* [code](https://github.com/allanj/pytorch_lstmcrf/tree/v0.2.0)
+* [paper reference from authors of the code](https://arxiv.org/abs/1603.01360)
+
+LM-LSTM-CRF
+* [code](https://github.com/LiyuanLucasLiu/LM-LSTM-CRF)
+* [paper](https://arxiv.org/abs/1709.04109)
